@@ -193,7 +193,7 @@ class CreateOfferRFQForm(forms.ModelForm):
         widget=forms.Select(
             attrs={'class': 'form-control', 'placeholder': 'RFQ No'}
         ),
-    ) 
+    )
     part = forms.ModelChoiceField(
         queryset = Part.objects.all(),
         required=True,
@@ -209,12 +209,11 @@ class CreateOfferRFQForm(forms.ModelForm):
         choices=( ('gonderildi', 'Gönderildi'),
         ('inceleniyor', 'İnceleniyor')),
         attrs={'class': 'form-control'}))
-    
+
     class Meta:
-       
         model = Offer
         fields = '__all__'
-        exclude = ['offer_no', 'created_date', 'related_person']
+        exclude =  ['offer_no', 'created_date', 'related_person']
 
 
 class CreateRFQForm(forms.ModelForm):
@@ -251,10 +250,18 @@ class CreateRFQForm(forms.ModelForm):
             attrs={'class':'form-control', 'placeholder':'Part Quantity'}
         )
     )
+    status = forms.CharField(widget = forms.Select(
+        choices=( ('sent', 'Sent'),
+        ('pending', 'Pending'),
+        ('in progress', 'In Progress'),
+        ('n/a', 'N/A')),
+        attrs={'class': 'form-control'}))
+
+
     rfq_mail = forms.FileField(
          required=False,
         widget=forms.FileInput(
-            attrs={'class':'form-control'}
+            attrs={'class':'form-control p-1 w-50'}
         )
     )
 
@@ -262,7 +269,7 @@ class CreateRFQForm(forms.ModelForm):
     class Meta:
         model = RFQ
         fields = '__all__'
-        exclude = ['status', 'created_by', 'srv_rfq_no', 'created_date']
+        exclude = ['created_by', 'srv_rfq_no', 'created_date']
 
 class CreateCustomerForm(forms.ModelForm):
 

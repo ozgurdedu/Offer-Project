@@ -51,7 +51,6 @@ def create_offer_rfq_view(request, id):
          'status' : 'inceleniyor'
      }
      
-     print(rfq)
      if request.method == "POST":
           form = CreateOfferRFQForm(request.POST, initial=initial)
           if form.is_valid():
@@ -121,9 +120,13 @@ def rfq_view(request):
 
 @login_required(login_url='/user/login')
 def create_rfq_view(request):
-
+    initial = {
+         'request_date' : timezone.now,
+         'status' : 'in progress'
+     }
+     
     if request.method == "POST":
-        form = CreateRFQForm(request.POST, initial={'request_date':timezone.now})
+        form = CreateRFQForm(request.POST, initial=initial)
         if form.is_valid():
             user = form.save(commit=False)
             user.created_by = request.user
@@ -131,7 +134,7 @@ def create_rfq_view(request):
             form.save()
             return redirect('rfqs')
     else:
-        form = CreateRFQForm(initial={'request_date':timezone.now})
+        form = CreateRFQForm(initial=initial)
     context = {'form':form}
     return render(request, 'offer/create-rfq.html', context)
 

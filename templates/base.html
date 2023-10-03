@@ -11,10 +11,12 @@
 </head>
 <body>
     <div class="container-fluid">
-    
+        
+            {% load static %}
              
            <div class="row">
                 <div class="col-md-3">
+                   <img src="{% static 'logo/sirvanli-logo.jpg' %}" alt="" class="img-fluid img-thumbnail my-3">
                    {% include 'navbar.html' %}
                 </div>
                 <div class="col-md-6">
