@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h4 class="text-center my-4">Welcome to Login Page</h4>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form}}
+        <button class="btn btn-outline-primary form-control my-2" type="submit">
+            Giriş Yap
+        </button>
+    </form>
+{% endblock content %}
+    

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <div class="h5 my-3 text-danger">
+        Create Question!
+    </div>
+    <form action="" method="post" class="uniForm">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="btn btn-warning my-2 p-2">
+            Create Question!
+        </button>
+    </form>
+{% endblock content %}
+    

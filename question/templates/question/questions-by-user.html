@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post" class="my-3">
+    {% csrf_token %}
+    {% for question in questions %}
+    <div class="h5 text-primary">{{ question.question }}</div> 
+    <div class="text-muted"> {{question.rfq}} </div>        
+    <br>
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_1 }}">
+        {{ question.answer_1 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_2 }}">
+        {{ question.answer_2 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_3 }}">
+        {{ question.answer_3 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_4 }}">
+        {{ question.answer_4 }}
+        <hr>
+        <input type="text" name="comment-text"  class="form-control">  
+        <button type="submit" class="my-4 btn btn-primary">Ekle</button>
+    {% endfor %}
+</form> 
+{% endblock content %}
+    

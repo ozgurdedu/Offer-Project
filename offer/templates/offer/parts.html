@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+
+{% block content %} 
+           
+<div class="row my-3">
+    <div class="col-md-4 h3">All Parts</div>
+    <div class="col-md-8 text-right">
+             <a href="{% url 'create-part' %}">
+                <button class="btn btn-success text-white bold-text">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </a>
+
+    </div>
+</div>
+
+{% if parts.count > 0  %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+          <th scope="col">Company</th>
+          <th scope="col">Name</th>
+          <th scope="col">Part No</th>
+          <th scope="col">Unit Price</th>
+          <th scope="col">Mold Price</th>
+          <th scope="col">Description</th>
+          
+          {% if user.is_authenticated %}
+          <th scope="col">Activity</th>
+          {% endif %}
+            
+        </tr>
+      </thead>
+      <tbody>
+    {% for part in parts %}
+        <tr>
+            <th scope="row"> {{part.customer}} </th>
+            <td>{{part.name}}</td>
+            <td>{{part.part_no}}</td>
+            <td>{{part.unit_price}}</td>  
+            <td>{{part.mold_price}}</td>  
+            <td>{{part.description}}</td> 
+            
+            {% if user.is_authenticated %}
+            <td class="w-255">
+                <a href="{% url 'update-part' part.id %}">
+                    <i class="fa-regular fa-pen-to-square text-primary"></i>
+                </a>
+                <a href="{% url 'delete-part' part.id %}">
+                    <i class="fa-regular fa-trash-can text-danger"></i>
+                </a>
+            </td>
+            {% endif %}
+                
+            
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+{% endif %}
+    
+{% endblock content %}
+    

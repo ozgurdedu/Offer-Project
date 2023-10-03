@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="h3 text-left my-3">
+    All Questions
+</div>
+<form method="post" action="#" class="my-3">
+    {% csrf_token %}
+    {% for question in questions %}
+        
+      
+   
+    <div class="h5 text-primary">{{ question.question }}</div>  
+     
+    {% for person in question.related_person.all %}
+        {{person}}
+    {% endfor %}
+
+        <br>
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_1 }}">
+        {{ question.answer_1 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_2 }}">
+        {{ question.answer_2 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_3 }}">
+        {{ question.answer_3 }}
+        <br>
+        
+        <input type="radio" name="question_{{ question.id }}" value="{{ question.answer_4 }}">
+        {{ question.answer_4 }}
+        <hr>
+        <input type="submit" value="Submit" class="my-4 btn btn-primary">
+
+    {% endfor %}
+</form> 
+    
+{% endblock content %}
+    

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3 class="text-center my-4">Create Customer</h3>
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        {{form}}    
+        <button type="submit" class="btn btn-outline-primary form-control my-2">
+            Update Customer
+        </button>
+    </form>
+{% endblock content %}
+    

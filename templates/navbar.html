@@ -1,0 +1,61 @@
+<nav id="sidebar" class="c d-md-block bg-light sidebar my-4">
+   
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'offer-home' %}">
+                All Offers
+            </a>
+        </li>
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'questions' %}">
+                Sorular
+            </a>
+        </li>
+        -->
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'create-question' %}">
+                Soru Oluştur
+            </a>
+        </li> -->
+        
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'customers' %}">
+                Customers
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'parts' %}">
+                Parts
+            </a>
+        </li>
+        {% if user.is_authenticated %}
+        <!-- <li class="nav-item">
+            <a class="nav-link" href="{% url 'related-question' %}">
+                Benim Sorular
+            </a>
+        </li> -->
+
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'create-rfq' %}">
+                Create RFQ
+            </a>
+        </li>
+     
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'rfqs' %}">
+                See RFQs
+            </a>
+        </li>
+      
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'offer-detail' request.user.id %}">
+                See Your Offers
+            </a>
+        </li> 
+        {% endif %}
+           
+    
+            
+    </ul>
+
+</nav>

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+    
+
+    <div class="row my-3">
+        <div class="col-md-4 h3">RFQS</div>
+        <div class="col-md-8 text-right">
+               <a href="{% url 'create-rfq' %}">
+                    <button class="btn btn-success text-white bold-text">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </a> 
+        </div>
+    </div>
+    <div class="row mx-4">
+    {% for rfq in rfqs %}
+            <div class="col-md-3 card  mx-4 my-2" style="background-color: #ededed;">
+                    <div class=" p-2 text-center ">
+                        <div class="h4" style="font-family:'Times New Roman', Times, serif;">{{rfq.srv_rfq_no}}</div>
+                        <div class="h6">{{rfq.rfq_no}}</div>
+                    </div>
+                    <hr>
+                    <div class="card-body p-1 text-center">
+                        <div class="text-center" style="font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+                            {{rfq.customer}}
+                        </div>
+                        <div class="text-center">
+                            {{rfq.date|date:"d/m/y"}}
+                        </div>
+                        <div class="text-center h6">
+                            {{rfq.part_quantity}}
+                        </div>
+                       
+                    </div>
+                   
+                  
+                  
+                  <div class="w-255">
+                    <a href="{% url 'create-offer-rfq' rfq.id %}" class="btn btn-outline-success  my-1 text-left">
+                        <div class="text-center" style="font-weight: bolder; font-size: larger;">
+                            <i class="fa-solid fa-plus"></i>
+                        </div>
+                    </a> 
+                    {% if request.user == rfq.created_by %}
+                    <a href="{% url 'delete-rfq' rfq.id %}" class="btn btn-outline-danger  my-1 text-right">
+                        <div class="text-center" style="font-weight: bolder; font-size: larger;">
+                            <i class="fa-regular fa-trash-can"></i>
+                        </div>
+                    </a>
+                    {% endif %}
+                </div>
+                
+                    
+                </div>    
+  
+    {% endfor %} 
+    </div> 
+{% endblock content %}

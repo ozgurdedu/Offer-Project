@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <style>
+    .custom-bg {
+        background-color: #e7e7e7;
+    }
+    .bold-text {
+        font-weight: 750;
+        font-size: 35;
+    }
+    </style>
+    
+    <div class="row my-3">
+        <div class="col-md-4 h3">All Offers</div>
+        <div class="col-md-8 text-right">
+                 <a href="{% url 'create-offer' %}">
+                    <button class="btn btn-success text-white bold-text">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </a>
+
+        </div>
+    </div>
+   <div class="row my-3">
+    
+        <div class="col-md-9 text-left">
+            <div class="text-muted">Total Offer: {{offer_count}}</div>
+        </div>
+
+
+   </div>  
+    
+    {% for offer in offers %}
+    <div class="card my-2">
+        <div class="row">
+            <div class="col-md-3 my-4">
+                <br>
+                <div class="card-body p-4">
+                    <div class="card-title mx-auto my-auto">
+                       
+                       {% if request.user == offer.related_person %}
+                       <h3 class="text-info">{{offer.offer_no}}</h3>
+                       {% else %}
+                        <h3>{{offer.offer_no}}</h3> 
+                       {% endif %}
+                    <div class="text-muted">
+                       {{offer.rfq}}
+                   
+                    </div>
+                    <div class="text-muted">
+                        {{offer.rfq.rfq_no}}
+                     </div>
+    
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9 text-center">
+                <div class="card-body  custom-bg">
+                    <div class="card-title">
+                        {{offer.part.customer}}
+                        
+                    </div>
+                    <div class="card-subtitle">
+                        {{offer.part}}
+                        <div class="text-muted">
+                            {{offer.part.description}}
+                        </div>
+                        <br>
+                        Part Quantity
+                       <div class="h4 text-dark">
+                  
+                        {{offer.rfq.part_quantity}}
+                       </div>
+                    </div>
+                </div>
+            </div>
+          
+        </div>    
+
+        <div class="card-footer text-right">
+            <div class="row">
+                <div class="col-md-6 text-left"><div class="text-muted">{{offer.related_person.first_name}} {{offer.related_person.last_name}} - {{ offer.date|date:"d/m/Y" }}</div></div>
+               
+               
+               {% if request.user == offer.related_person %}
+               <div class="col-md-6 text-rigth">
+                        {% if offer.status == "gonderildi" %}
+                            <a href="{% url 'update-offer-status' offer.id %}"><div class="text-success bold-text"> {{offer.status}}</div></a>
+                        {% else %}
+                            <a href="{% url 'update-offer-status' offer.id %}">  <div class="text-danger bold-text"> {{offer.status}}</div></a>
+                        {% endif %}
+                    </div>
+               {% else %}
+                    <div class="col-md-6 text-rigth">
+                        {% if offer.status == "gonderildi" %}
+                            <div class="text-success bold-text"> {{offer.status}}</div>
+                        {% else %}
+                            <div class="text-danger bold-text"> {{offer.status}}</div>
+                        {% endif %}
+                    </div>
+               {% endif %}
+                
+               
+               
+               
+             
+            </div>
+        </div>
+      
+    </div>
+    {% endfor %}
+    
+        <!-- -> {{offer.offer_no}} 
+        <br>
+        -> {{offer.rfq_no}}
+        <br>
+        -> {{offer.related_person.first_name}} {{offer.related_person.last_name}}
+        <br>
+        -> {{offer.date}}
+        <br>
+        -> {{offer.part.customer}}/{{offer.part}}/{{offer.part.description}}
+        <br>
+        -> {{offer.created_date |timesince}}
+        <br>
+        -> <h3> {{offer.rfq_no.part_quantity}} </h3>
+        <br>
+        {% if offer.status == "gonderildi" %}
+            <div class="text-success">{{offer.status}}</div>
+        {% else %}
+            <div class="text-warning">{{offer.status}}</div>
+        {% endif %}
+        <br>
+        {% if offer.rfq_no.status == "uygun" %}
+            <div class="text-success">{{offer.rfq_no.status}}</div>
+        {% else %}
+            <div class="text-warning">{{offer.rfq_no.status}}</div>
+        {% endif %}
+        <h3>----------------------------------------------------------------</h3> -->
+
+        
+{% endblock content %}

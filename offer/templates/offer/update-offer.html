@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <h3 class="text-center my-4">
+        Update Offer/{{offer.offer_no}}
+    </h3>
+    
+    {% if request.user == offer.related_person %}
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        {{form}}
+        <div class="row">
+            <div class="col-md-11">
+                <button type="submit" class="btn btn-warning form-control my-2">
+                    Update Offer
+                </button>
+            </div>
+            <div class="col-md-1 btn btn-danger form-control my-2">
+                <a href="{% url 'delete-offer' offer.id %}" style="text-decoration: none; color: inherit;">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </form>
+    {% else %}
+        <script>window.location.href = "{% url 'offer-home' %}";</script>
+    {% endif %}
+        
+{% endblock content %}
+    
