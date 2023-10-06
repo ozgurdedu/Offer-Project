@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Offer, RFQ, Customer, Part, OfferDetail
-from .forms import CreateOfferForm, CreateRFQForm, CreateCustomerForm, CreateOfferRFQForm, CreatePartForm
+from .forms import CreateOfferForm, CreateRFQForm, CreateCustomerForm, CreateOfferRFQForm, CreatePartForm, CreateOfferDetailForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
@@ -366,5 +366,19 @@ def get_offer_detail_view(request, id):
 
 
 @login_required(login_url='/user/login')
-def create_offer_detail_view(request):
-    pass
+def create_offer_detail_view(request, id):
+    
+    offer = get_object_or_404(Offer, id=id)
+    
+    if request.method == "POST":
+        form = CreateOfferDetailForm(request.POST, initial={'offer':offer})
+        if form.is_valid():
+            form.save()
+            return redirect('user-offer', id = request.user.id)
+    else:
+        form = CreateOfferDetailForm(initial={'offer':offer})
+    
+    
+    context = {'form':form}
+
+    return render(request, 'offer/create-offer-detail.html', context)

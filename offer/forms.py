@@ -1,5 +1,5 @@
 from django import forms
-from .models import Offer, RFQ, Part, Customer
+from .models import Offer, RFQ, Part, Customer, OfferDetail
 from django_countries.fields import CountryField
 INDUSTRIES = (
     ('accounting', ('Accounting')),
@@ -366,3 +366,10 @@ class CreatePartForm(forms.ModelForm):
         model = Part
         fields = '__all__'
         exclude = ['created_date']
+
+
+class CreateOfferDetailForm(forms.ModelForm):
+    class Meta:
+        model = OfferDetail
+        fields = '__all__'
+        

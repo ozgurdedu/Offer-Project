@@ -68,11 +68,32 @@
                 </div>
                 <div class="col-md-9 text-center">
                     <div class="card-body  custom-bg">
-                        <div class="text-right">
-                            <a href="{% url 'delete-offer' offer.id %}" class="text-danger">
+                        <div class="text-right mx-2">
+                            <a href="{% url 'delete-offer' offer.id %}" class="text-danger mx-2">
                                 <i class="fa-regular fa-trash-can"></i>
                             </a>
+                        
+                       
+                                {% if offer.offerdetail_set.all %}    
+                                <a href="#"> 
+                                    <i class="fa-regular fa-pen-to-square"></i>
+                                </a>
+                                {% else %}
+                                <a href="{% url 'create-offer-detail' offer.id %}" class="text-success">  
+                                    <i class="fa-regular fa-square-plus"></i>
+                                </a>
+                                {% endif %}
+                              
+                          
+                            
+                                
+                       
+                                
+                           
                         </div>
+                            
+
+                            
                         <div class="card-title">
                             {{offer.part.customer}}
                         </div>
