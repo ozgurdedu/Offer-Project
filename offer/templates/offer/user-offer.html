@@ -33,9 +33,22 @@
    </div>  
     
     {% for offer in offers %}
+        
+    
         {% if request.user == offer.related_person %}
+
         <div class="card my-4">
+            {% for detail in offer.offerdetail_set.all %}
+                        
+                {% if detail.offer.id == offer.id %}
+                <a href="{% url 'offer-detail' offer.id %}" class="mx-2 my-2">
+                    <i class="fa-solid fa-circle-arrow-right"></i>
+                </a>
+                {% endif %}
+
+            {% endfor %}
             <div class="row">
+          
                 <div class="col-md-3 my-4">
                     <br>
                     <div class="card-body p-4">

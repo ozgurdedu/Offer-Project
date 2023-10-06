@@ -14,6 +14,7 @@ urlpatterns = [
     path("update-offer-status/<int:id>", views.update_offer_status, name = "update-offer-status"),
     path("offer-detail/<int:id>", views.offer_detail_view, name = "offer-detail"),
     path("get-detail/<int:id>", views.get_offer_detail_view, name = "get-offer-detail"),
+    path("create-offer-detail", views.create_offer_detail_view, name = "create-offer-detail"),
     path("create-rfq", views.create_rfq_view, name = "create-rfq"),
     path("delete-rfq/<int:id>", views.delete_rfq_view, name = "delete-rfq"),
     path("rfqs", views.rfq_view, name = "rfqs"),

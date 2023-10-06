@@ -13,10 +13,6 @@ def home_view(request):
 
     offers = Offer.objects.order_by('-created_date')
 
-    for offer in offers:
-        for detail in offer.offerdetail_set.all():
-            print(detail.offer.id)
-
     offer_count = offers.count()
     context = {'offers':offers,
                 'offer_count':offer_count}
@@ -113,99 +109,6 @@ def update_offer_status(request, id):
     
     return redirect('offer-home')
 
-@login_required(login_url='/user/login')
-def offer_detail_view(request, id):
-   
-    offer = get_object_or_404(Offer, id=id)
-    try:
-        offer_detail = OfferDetail.objects.get(offer=offer)
-    except OfferDetail.DoesNotExist:
-        return redirect('offer-home')
-    
-    context = {'offer_detail':offer_detail}
-    return render(request, 'offer/offer-detail.html', context)
-
-
-@login_required(login_url='/user/login')
-def get_offer_detail_view(request, id):
-
-    offer_detail = get_object_or_404(OfferDetail, id=id)
-
-    d1 = {'#' : [offer_detail.offer.rfq.customer,
-                offer_detail.offer.part.part_no,
-                offer_detail.offer.part.name, 
-                offer_detail.malzeme, 
-                offer_detail.dokum_tipi,
-                offer_detail.maca_tipi,
-                offer_detail.parca_agirligi_kg,
-                offer_detail.maca_agirligi_kg,
-                offer_detail.yillik_adet, 
-                offer_detail.min_siparis_adedi, 
-                offer_detail.para_birimi,
-                offer_detail.parca_fiyati,
-                offer_detail.kalip_fiyati
-                ]
-    }
-    df1 = pd.DataFrame(data=d1, index = [
-        "Customer",
-        "Part No",
-        "Part Name", 
-        "Malzeme",
-        "Döküm Tipi",
-        "Maça Tipi",
-        "Parça Ağırlığı (Kg)",
-        "Maça Ağırlığı (Kg)",
-        "Yıllık Adet",
-        "Min Sipariş Adedi",
-        "Para Birimi",
-        "Parça Fiyatı",
-        "Kalıp Fiyatı"
-    ])
-
-    d2 = {'#' :[offer_detail.offer.rfq.customer,
-                offer_detail.offer.part.part_no,
-                offer_detail.kum_dokum, 
-                offer_detail.kokil_dokum, 
-                offer_detail.enjeksiyon_dokum,
-                offer_detail.soguk_maca,
-                offer_detail.takalama,
-                offer_detail.testere,
-                offer_detail.zimpara, 
-                offer_detail.tesviye, 
-                offer_detail.kumlama,
-                offer_detail.test_sizdirmazlik,
-                offer_detail.test_temizleme
-                ]
-    }
-
-    df2 = pd.DataFrame(data=d2, index = [
-        "Customer",
-        "Part No",
-        "Kum Döküm", 
-        "Kokil Döküm",
-        "Enjeksiyon Döküm",
-        "Soğuk Maça",
-        "Takalama",
-        "Testere",
-        "Zımpara",
-        "Tesviye",
-        "Kumlama",
-        "Test (Sızdırmazlık)",
-        "Test (Temizleme)"
-    ])
-    df = pd.concat([df1, df2], axis=1)
-        # Excel dosyasını oluştur
-    excel_file_path = "offer_detail.xlsx"
-    df.to_excel(excel_file_path)
-     # Excel dosyasını HttpResponse olarak döndür
-    with open(excel_file_path, 'rb') as excel_file:
-        response = HttpResponse(excel_file.read())
-        response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        response['Content-Disposition'] = f"attachment; filename={offer_detail.offer}_details.xlsx"
-    return response
-
-    # context = {'offer_detail':offer_detail, 'df1':df1, 'df2':df2}
-    # return render(request, 'offer/offer-detail.html', context)
 
 
 
@@ -365,3 +268,103 @@ def delete_part_view(request,id):
     except Part.DoesNotExist:
         return redirect('parts')
 
+# @@@@@@@@@@@@@@@@@ OFFER DETAIL
+
+@login_required(login_url='/user/login')
+def offer_detail_view(request, id):
+   
+    offer = get_object_or_404(Offer, id=id)
+    try:
+        offer_detail = OfferDetail.objects.get(offer=offer)
+    except OfferDetail.DoesNotExist:
+        return redirect('offer-home')
+    
+    context = {'offer_detail':offer_detail}
+    return render(request, 'offer/offer-detail.html', context)
+
+
+@login_required(login_url='/user/login')
+def get_offer_detail_view(request, id):
+
+    offer_detail = get_object_or_404(OfferDetail, id=id)
+
+    d1 = {'#' : [offer_detail.offer.rfq.customer,
+                offer_detail.offer.part.part_no,
+                offer_detail.offer.part.name, 
+                offer_detail.malzeme, 
+                offer_detail.dokum_tipi,
+                offer_detail.maca_tipi,
+                offer_detail.parca_agirligi_kg,
+                offer_detail.maca_agirligi_kg,
+                offer_detail.yillik_adet, 
+                offer_detail.min_siparis_adedi, 
+                offer_detail.para_birimi,
+                offer_detail.parca_fiyati,
+                offer_detail.kalip_fiyati
+                ]
+    }
+    df1 = pd.DataFrame(data=d1, index = [
+        "Customer",
+        "Part No",
+        "Part Name", 
+        "Malzeme",
+        "Döküm Tipi",
+        "Maça Tipi",
+        "Parça Ağırlığı (Kg)",
+        "Maça Ağırlığı (Kg)",
+        "Yıllık Adet",
+        "Min Sipariş Adedi",
+        "Para Birimi",
+        "Parça Fiyatı",
+        "Kalıp Fiyatı"
+    ])
+
+    d2 = {'#' :[offer_detail.offer.rfq.customer,
+                offer_detail.offer.part.part_no,
+                offer_detail.kum_dokum, 
+                offer_detail.kokil_dokum, 
+                offer_detail.enjeksiyon_dokum,
+                offer_detail.soguk_maca,
+                offer_detail.takalama,
+                offer_detail.testere,
+                offer_detail.zimpara, 
+                offer_detail.tesviye, 
+                offer_detail.kumlama,
+                offer_detail.test_sizdirmazlik,
+                offer_detail.test_temizleme
+                ]
+    }
+
+    df2 = pd.DataFrame(data=d2, index = [
+        "Customer",
+        "Part No",
+        "Kum Döküm", 
+        "Kokil Döküm",
+        "Enjeksiyon Döküm",
+        "Soğuk Maça",
+        "Takalama",
+        "Testere",
+        "Zımpara",
+        "Tesviye",
+        "Kumlama",
+        "Test (Sızdırmazlık)",
+        "Test (Temizleme)"
+    ])
+    df = pd.concat([df1, df2], axis=1)
+        # Excel dosyasını oluştur
+    excel_file_path = "offer_detail.xlsx"
+    df.to_excel(excel_file_path)
+     # Excel dosyasını HttpResponse olarak döndür
+    with open(excel_file_path, 'rb') as excel_file:
+        response = HttpResponse(excel_file.read())
+        response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response['Content-Disposition'] = f"attachment; filename={offer_detail.offer}_details.xlsx"
+    return response
+
+    # context = {'offer_detail':offer_detail, 'df1':df1, 'df2':df2}
+    # return render(request, 'offer/offer-detail.html', context)
+
+
+@login_required(login_url='/user/login')
+def create_offer_detail_view(request):
+    pass
