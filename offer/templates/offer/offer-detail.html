@@ -1,10 +1,215 @@
 {% extends 'base.html' %}
-
-
 {% block content %}
 
+<div class="my-4">
+  <div class="h3">
+    {{offer_detail.offer}}
+  </div>
+</div>
 
-{{offer_detail.takalama}}
+<table class="my-4">
+  <!-- offer_detail.offer.rfq.customer,
+  offer_detail.offer.part.part_no,
+  offer_detail.offer.part.name, 
+  offer_detail.malzeme, 
+  offer_detail.dokum_tipi,
+  offer_detail.maca_tipi,
+  offer_detail.parca_agirligi_kg,
+  offer_detail.maca_agirligi_kg,
+  offer_detail.yillik_adet, 
+  offer_detail.min_siparis_adedi, 
+  offer_detail.para_birimi,
+  offer_detail.parca_fiyati,
+  offer_detail.kalip_fiyati,
+  offer_detail.teslim_turu,
+  offer_detail.kalip_goz_sayisi,
+  offer_detail.maca_goz_sayisi,
+  offer_detail.kalip_omru_baski_sayisi,
+
+
+  offer_detail.kum_dokum,
+  offer_detail.kokil_dokum,
+  offer_detail.enjeksiyon_dokum,
+  offer_detail.sicak_maca,
+  offer_detail.soguk_maca,
+  offer_detail.takalama,
+  offer_detail.testere,
+  offer_detail.zimpara,
+  offer_detail.tesviye,
+  offer_detail.kumlama,
+  offer_detail.test_sizdirmazlik,
+  offer_detail.test_temizleme,
+  offer_detail.isil_islem_kg,
+  offer_detail.isil_islem_sarj,
+  offer_detail.vibrasyon,
+  offer_detail.cnc_dik_isleme,
+  offer_detail.cnc_yatay_isleme,
+  offer_detail.torna,
+  offer_detail.heli_coil,
+  offer_detail.montaj_parca,
+  offer_detail.montaj_kaynak,
+  offer_detail.paketleme,
+
+  offer_detail.emprenye,
+  offer_detail.kaplama,
+  offer_detail.boya,
+  offer_detail.dis_isleme,
+  offer_detail.x_ray_testi,
+  offer_detail.mukavemet_testi,
+  offer_detail.nakliye_maliyeti, -->
+ 
+        
+    <tbody >
+      <tr>
+        <th scope="row"> Müşteri </th>
+        <td> : {{offer_detail.offer.rfq.customer}} </td>
+        <th scope="row"> Kum Döküm </th>
+        <td> : {{offer_detail.kum_dokum}} </td>
+        <th scope="row"> Emprenye </th>
+        <td> : {{offer_detail.emprenye}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Part No </th>
+        <td> : {{offer_detail.offer.part.part_no}} </td>
+        <th scope="row"> Kokil Döküm </th>
+        <td> : {{offer_detail.kokil_dokum}} </td>
+        <th scope="row"> Kaplama </th>
+        <td> : {{offer_detail.kaplama}} </td>
+     </tr>
+     <tr>
+        <th scope="row"> Part Description </th>
+        <td> : {{offer_detail.offer.part.name}} </td>
+        <th scope="row"> Enjeksiyon Döküm </th>
+        <td> : {{offer_detail.enjeksiyon_dokum}} </td>
+        <th scope="row"> Boya </th>
+        <td> : {{offer_detail.boya}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Malzeme </th>
+        <td> : {{offer_detail.malzeme}} </td>
+        <th scope="row"> Sıcak Maça </th>
+        <td> : {{offer_detail.sicak_maca}} </td>
+        <th scope="row"> Dış İşleme </th>
+        <td> : {{offer_detail.dis_isleme}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Döküm Tipi </th>
+        <td> : {{offer_detail.dokum_tipi}} </td>
+        <th scope="row"> Soğuk Maça </th>
+        <td> : {{offer_detail.soguk_maca}} </td>
+        <th scope="row"> X-Ray Testi </th>
+        <td> : {{offer_detail.x_ray_testi}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Maça Tipi </th>
+        <td> : {{offer_detail.maca_tipi}} </td>
+        <th scope="row"> Takalama </th>
+        <td> : {{offer_detail.takalama}} </td>
+        <th scope="row"> Mukavemet Testi </th>
+        <td> : {{offer_detail.mukavemet_testi}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Parça Ağırlığı (Kg) </th>
+        <td> : {{offer_detail.parca_agirligi_kg}} </td>
+        <th scope="row"> Testere </th>
+        <td> : {{offer_detail.testere}} </td>
+        <th scope="row"> Nakliye Maliyeti </th>
+        <td> : {{offer_detail.nakliye_maliyeti}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Maça Ağırlığı (Kg) </th>
+        <td> : {{offer_detail.maca_agirligi_kg}} </td>
+        <th scope="row"> Zımpara </th>
+        <td>:  {{offer_detail.zimpara}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Yıllık Adet </th>
+        <td> : {{offer_detail.yillik_adet}} </td>
+        <th scope="row"> Tesviye </th>
+        <td> : {{offer_detail.tesviye}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Min Sipariş Adedi </th>
+        <td> : {{offer_detail.min_siparis_adedi}} </td>
+        <th scope="row"> Kumlama </th>
+        <td> : {{offer_detail.kumlama}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Para Birimi </th>
+        <td> : {{offer_detail.para_birimi}} </td>
+        <th scope="row"> Test (Sızdırmazlık) </th>
+        <td> : {{offer_detail.test_sizdirmazlik}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Parça Fiyatı </th>
+        <td> : {{offer_detail.parca_fiyati}} </td>
+        <th scope="row"> Test (Temizleme) </th>
+        <td> : {{offer_detail.test_temizleme}} </td>
+      </tr>
+      <tr>
+        <th scope="row">Kalıp Fiyatı </th>
+        <td> : {{offer_detail.kalip_fiyati}} </td>
+        <th scope="row"> Isıl İşlem (Kg) </th>
+        <td> : {{offer_detail.isil_islem_kg}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Teslim Türü </th>
+        <td> : {{offer_detail.teslim_turu}} </td>
+        <th scope="row"> Isıl İşlem (Şarj) </th>
+        <td> : {{offer_detail.isil_islem_sarj}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Kalıp Göz Sayısı </th>
+        <td> : {{offer_detail.kalip_goz_sayisi}} </td>
+        <th scope="row"> Vibrasyon </th>
+        <td> : {{offer_detail.vibrasyon}} </td>
+      </tr> 
+      <tr>
+        <th scope="row"> Maça Göz Sayısı </th>
+        <td> : {{offer_detail.maca_goz_sayisi}} </td>
+        <th scope="row"> CNC (Dik İşleme) </th>
+        <td> : {{offer_detail.cnc_dik_isleme}} </td>
+      </tr>
+      <tr>
+        <th scope="row"> Kalıp Ömrü Baskı Sayısı </th>
+        <td>:  {{offer_detail.kalip_omru_baski_sayisi}} </td>
+        <th scope="row"> CNC (Yatay İşleme) </th>
+        <td> : {{offer_detail.cnc_yatay_isleme}} </td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+        <td> </td>
+        <th scope="row"> Torna </th>
+        <td> : {{offer_detail.torna}} </td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+        <td> </td>
+        <th scope="row"> Heli-Coil </th>
+        <td> : {{offer_detail.heli_coil}} </td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+        <td> </td>
+        <th scope="row"> Montaj (Parça) </th>
+        <td> : {{offer_detail.montaj_parca}} </td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+        <td> </td>
+        <th scope="row"> Montaj (Kaynak) </th>
+        <td> : {{offer_detail.montaj_kaynak}} </td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+        <td> </td>
+        <th scope="row"> Paketleme </th>
+        <td> : {{offer_detail.paketleme}} </td>
+      </tr>
+   </tbody>
+   
+  </table>
+
 
 
 <a href="{% url 'get-offer-detail' offer_detail.id %}">

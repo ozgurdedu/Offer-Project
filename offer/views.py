@@ -288,7 +288,7 @@ def get_offer_detail_view(request, id):
 
     offer_detail = get_object_or_404(OfferDetail, id=id)
 
-    d1 = {'#' : [offer_detail.offer.rfq.customer,
+    d = {'#' : [offer_detail.offer.rfq.customer,
                 offer_detail.offer.part.part_no,
                 offer_detail.offer.part.name, 
                 offer_detail.malzeme, 
@@ -300,10 +300,45 @@ def get_offer_detail_view(request, id):
                 offer_detail.min_siparis_adedi, 
                 offer_detail.para_birimi,
                 offer_detail.parca_fiyati,
-                offer_detail.kalip_fiyati
+                offer_detail.kalip_fiyati,
+                offer_detail.teslim_turu,
+                offer_detail.kalip_goz_sayisi,
+                offer_detail.maca_goz_sayisi,
+                offer_detail.kalip_omru_baski_sayisi,
+                offer_detail.kum_dokum,
+                offer_detail.kokil_dokum,
+                offer_detail.enjeksiyon_dokum,
+                offer_detail.sicak_maca,
+                offer_detail.soguk_maca,
+                offer_detail.takalama,
+                offer_detail.testere,
+                offer_detail.zimpara,
+                offer_detail.tesviye,
+                offer_detail.kumlama,
+                offer_detail.test_sizdirmazlik,
+                offer_detail.test_temizleme,
+                offer_detail.isil_islem_kg,
+                offer_detail.isil_islem_sarj,
+                offer_detail.vibrasyon,
+                offer_detail.cnc_dik_isleme,
+                offer_detail.cnc_yatay_isleme,
+                offer_detail.torna,
+                offer_detail.heli_coil,
+                offer_detail.montaj_parca,
+                offer_detail.montaj_kaynak,
+                offer_detail.paketleme,
+                offer_detail.emprenye,
+                offer_detail.kaplama,
+                offer_detail.boya,
+                offer_detail.dis_isleme,
+                offer_detail.x_ray_testi,
+                offer_detail.mukavemet_testi,
+                offer_detail.nakliye_maliyeti,
+                
+
                 ]
     }
-    df1 = pd.DataFrame(data=d1, index = [
+    df = pd.DataFrame(data=d, index = [
         "Customer",
         "Part No",
         "Part Name", 
@@ -316,31 +351,15 @@ def get_offer_detail_view(request, id):
         "Min Sipariş Adedi",
         "Para Birimi",
         "Parça Fiyatı",
-        "Kalıp Fiyatı"
-    ])
-
-    d2 = {'#' :[offer_detail.offer.rfq.customer,
-                offer_detail.offer.part.part_no,
-                offer_detail.kum_dokum, 
-                offer_detail.kokil_dokum, 
-                offer_detail.enjeksiyon_dokum,
-                offer_detail.soguk_maca,
-                offer_detail.takalama,
-                offer_detail.testere,
-                offer_detail.zimpara, 
-                offer_detail.tesviye, 
-                offer_detail.kumlama,
-                offer_detail.test_sizdirmazlik,
-                offer_detail.test_temizleme
-                ]
-    }
-
-    df2 = pd.DataFrame(data=d2, index = [
-        "Customer",
-        "Part No",
-        "Kum Döküm", 
-        "Kokil Döküm",
+        "Kalıp Fiyatı",
+        "Teslim Türü",
+        "Kalıp Göz Sayısı",
+        "Maça Göz Sayısı",
+        "Kalıp Ömrü Baskı Sayısı",
+        "Kum Döküm",
+        "Kokil Döküm", 
         "Enjeksiyon Döküm",
+        "Sıcak Maça",
         "Soğuk Maça",
         "Takalama",
         "Testere",
@@ -348,9 +367,28 @@ def get_offer_detail_view(request, id):
         "Tesviye",
         "Kumlama",
         "Test (Sızdırmazlık)",
-        "Test (Temizleme)"
+        "Test (Temizleme)", 
+        "Isıl İşlem (kg bazında hesaplama için)",
+        "Isıl İşlem (şarf bazında hesaplama için)",
+        "Vibrasyon", 
+        "CNC (Dik İşleme)",
+        "CNC Yatay İşleme",
+        "Torna",
+        "Heli-Coil",
+        "Montaj (Parça)",
+        "Montaj (Kaynak)",
+        "Paketleme",
+        "Emprenye",
+        "Kaplama",
+        "Boya",
+        "Dış İşleme",
+        "X-Ray Testi",
+        "Mukavemet Testi",
+        "Nakliye Maliyeti"
     ])
-    df = pd.concat([df1, df2], axis=1)
+
+
+   
         # Excel dosyasını oluştur
     excel_file_path = "offer_detail.xlsx"
     df.to_excel(excel_file_path)
