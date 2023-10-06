@@ -1,14 +1,26 @@
 from django.shortcuts import render, redirect
-from .models import Offer, RFQ, Customer, Part
+from .models import Offer, RFQ, Customer, Part, OfferDetail
 from .forms import CreateOfferForm, CreateRFQForm, CreateCustomerForm, CreateOfferRFQForm, CreatePartForm
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils import timezone
+import pandas as pd
+import os
+from django.http import HttpResponse
+import tempfile
 
 def home_view(request):
+
     offers = Offer.objects.order_by('-created_date')
+
+    for offer in offers:
+        for detail in offer.offerdetail_set.all():
+            print(detail.offer.id)
+
     offer_count = offers.count()
-    context = {'offers':offers, 'offer_count':offer_count}
+    context = {'offers':offers,
+                'offer_count':offer_count}
+    
     return render(request, 'offer/home.html',context)
 
 # @@@@@@@@@@@@@@@@@ OFFER
@@ -18,7 +30,7 @@ def get_offer_byId(request, id):
     offers = Offer.objects.filter(related_person__id=id).order_by('-created_date')
     offer_count = offers.count()
     context = {'offers':offers, 'offer_count':offer_count}
-    return render(request, 'offer/offer-detail.html', context)
+    return render(request, 'offer/user-offer.html', context)
 
 @login_required(login_url='/user/login')
 def create_offer_view(request):
@@ -34,7 +46,7 @@ def create_offer_view(request):
             offer = form.save(commit=False)
             offer.related_person = request.user
             form.save()
-            return redirect('offer-detail', id=request.user.id)
+            return redirect('user-offer', id=request.user.id)
 
     else:
         form = CreateOfferForm(initial=initial)
@@ -57,7 +69,7 @@ def create_offer_rfq_view(request, id):
               offer = form.save(commit=False)
               offer.related_person = request.user
               form.save()
-              return redirect('offer-detail', id=request.user.id)
+              return redirect('user-offer', id=request.user.id)
         
      else:
           form = CreateOfferRFQForm(initial=initial)
@@ -72,7 +84,7 @@ def update_offer_view(request, id):
         form = CreateOfferForm(request.POST, instance=offer)
         if form.is_valid():
             form.save()
-            return redirect('offer-detail', id=request.user.id)
+            return redirect('user-offer', id=request.user.id)
 
     else:
         form = CreateOfferForm(instance=offer)
@@ -85,7 +97,7 @@ def delete_offer_view(request, id):
     try:
         offer = get_object_or_404(Offer, id=id)
         offer.delete()
-        return redirect('offer-detail', id = request.user.id)
+        return redirect('user-offer', id = request.user.id)
     except Offer.DoesNotExist:
         return redirect('offer-home')
 
@@ -101,6 +113,99 @@ def update_offer_status(request, id):
     
     return redirect('offer-home')
 
+@login_required(login_url='/user/login')
+def offer_detail_view(request, id):
+   
+    offer = get_object_or_404(Offer, id=id)
+    try:
+        offer_detail = OfferDetail.objects.get(offer=offer)
+    except OfferDetail.DoesNotExist:
+        return redirect('offer-home')
+    
+    context = {'offer_detail':offer_detail}
+    return render(request, 'offer/offer-detail.html', context)
+
+
+@login_required(login_url='/user/login')
+def get_offer_detail_view(request, id):
+
+    offer_detail = get_object_or_404(OfferDetail, id=id)
+
+    d1 = {'#' : [offer_detail.offer.rfq.customer,
+                offer_detail.offer.part.part_no,
+                offer_detail.offer.part.name, 
+                offer_detail.malzeme, 
+                offer_detail.dokum_tipi,
+                offer_detail.maca_tipi,
+                offer_detail.parca_agirligi_kg,
+                offer_detail.maca_agirligi_kg,
+                offer_detail.yillik_adet, 
+                offer_detail.min_siparis_adedi, 
+                offer_detail.para_birimi,
+                offer_detail.parca_fiyati,
+                offer_detail.kalip_fiyati
+                ]
+    }
+    df1 = pd.DataFrame(data=d1, index = [
+        "Customer",
+        "Part No",
+        "Part Name", 
+        "Malzeme",
+        "Döküm Tipi",
+        "Maça Tipi",
+        "Parça Ağırlığı (Kg)",
+        "Maça Ağırlığı (Kg)",
+        "Yıllık Adet",
+        "Min Sipariş Adedi",
+        "Para Birimi",
+        "Parça Fiyatı",
+        "Kalıp Fiyatı"
+    ])
+
+    d2 = {'#' :[offer_detail.offer.rfq.customer,
+                offer_detail.offer.part.part_no,
+                offer_detail.kum_dokum, 
+                offer_detail.kokil_dokum, 
+                offer_detail.enjeksiyon_dokum,
+                offer_detail.soguk_maca,
+                offer_detail.takalama,
+                offer_detail.testere,
+                offer_detail.zimpara, 
+                offer_detail.tesviye, 
+                offer_detail.kumlama,
+                offer_detail.test_sizdirmazlik,
+                offer_detail.test_temizleme
+                ]
+    }
+
+    df2 = pd.DataFrame(data=d2, index = [
+        "Customer",
+        "Part No",
+        "Kum Döküm", 
+        "Kokil Döküm",
+        "Enjeksiyon Döküm",
+        "Soğuk Maça",
+        "Takalama",
+        "Testere",
+        "Zımpara",
+        "Tesviye",
+        "Kumlama",
+        "Test (Sızdırmazlık)",
+        "Test (Temizleme)"
+    ])
+    df = pd.concat([df1, df2], axis=1)
+        # Excel dosyasını oluştur
+    excel_file_path = "offer_detail.xlsx"
+    df.to_excel(excel_file_path)
+     # Excel dosyasını HttpResponse olarak döndür
+    with open(excel_file_path, 'rb') as excel_file:
+        response = HttpResponse(excel_file.read())
+        response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        response['Content-Disposition'] = f"attachment; filename={offer_detail.offer}_details.xlsx"
+    return response
+
+    # context = {'offer_detail':offer_detail, 'df1':df1, 'df2':df2}
+    # return render(request, 'offer/offer-detail.html', context)
 
 
 

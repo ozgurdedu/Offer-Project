@@ -2,105 +2,16 @@
 
 
 {% block content %}
-    
-<style>
-    .custom-bg {
-        background-color: #e7e7e7;
-    }
-    .bold-text {
-        font-weight: 500;
-    }
-    </style>
-    <div class="row my-3">
-            <div class="col-md-4 h3"> {{request.user}}'s Offers </div>
-            <div class="col-md-8 text-right">
-                     <a href="{% url 'create-offer' %}">
-                        <button class="btn btn-success text-white bold-text">
-                            <i class="fa-solid fa-plus"></i>
-                        </button>
-                    </a>
-    
-            </div>
-    </div>
-        
-    <div class="row my-3">
-    
-        <div class="col-md-9 text-left">
-            <div class="text-muted">Total Offer: {{offer_count}} </div>
-        </div>
 
 
-   </div>  
-    
-    {% for offer in offers %}
-        {% if request.user == offer.related_person %}
-        <div class="card my-4">
-            <div class="row">
-                <div class="col-md-3 my-4">
-                    <br>
-                    <div class="card-body p-4">
-                        <div class="card-title mx-auto my-auto">
-                            <a href="{% url 'update-offer' offer.id %}">
-                                <h4>{{offer.offer_no}}</h4>
-                            </a>
-            
-                            <div class="text-muted">
-                                {{offer.rfq.srv_rfq_no}}
-                            </div>
-                            <div class="text-muted">
-                                {{offer.rfq.rfq_no}}
-                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9 text-center">
-                    <div class="card-body  custom-bg">
-                        <div class="text-right">
-                            <a href="{% url 'delete-offer' offer.id %}" class="text-danger">
-                                <i class="fa-regular fa-trash-can"></i>
-                            </a>
-                        </div>
-                        <div class="card-title">
-                            {{offer.part.customer}}
-                        </div>
-                        <div class="card-subtitle">
-                            {{offer.part}}
-                            <div class="text-muted">
-                                {{offer.part.description}}
-                            </div>
-                            <br>
-                            Part Quantity
-                           <div class="h4 text-dark">
-                      
-                            {{offer.rfq.part_quantity}}
-                           </div>
-                        </div>
-                       
-                    </div>
-                </div>
-              
-            </div>    
-    
-            <div class="card-footer text-right">
-                <div class="row">
-                    <div class="col-md-6 text-left"><div class="text-muted">{{offer.related_person.first_name}} {{offer.related_person.last_name}} - {{ offer.date|date:"d/m/Y" }}</div></div>
-                    <div class="col-md-6 text-rigth">
-                    {% if offer.status == "gonderildi" %}
-                        <div class="text-success bold-text"> {{offer.status}}</div>
-                    {% else %}
-                        <div class="text-danger bold-text"> {{offer.status}}</div>
-                    {% endif %}
-                    </div>
-                </div>
-            </div>
-          
-        </div>   
-        {% else %}
-        <script>window.location.href = "{% url 'offer-home' %}";</script>
-        {% endif %}
-              
+{{offer_detail.takalama}}
 
-    {% endfor %}
-        
+
+<a href="{% url 'get-offer-detail' offer_detail.id %}">
+    <i class="fa-regular fa-file-excel text-success"></i>
+</a>
+
+
+
 {% endblock content %}
     

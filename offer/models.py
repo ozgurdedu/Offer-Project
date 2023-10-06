@@ -290,3 +290,56 @@ class Offer(models.Model):
     def __str__(self):
         return self.offer_no
     
+
+
+class OfferDetail(models.Model):
+    offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    malzeme = models.CharField(max_length=100, blank=True, null=True)
+    dokum_tipi = models.CharField(max_length=100, blank=True, null=True)
+    maca_tipi = models.CharField(max_length=100, blank=True, null=True)
+    parca_agirligi_kg = models.FloatField(default = 0, blank=True, null=True)
+    maca_agirligi_kg = models.FloatField(default = 0, blank=True, null=True)
+    yillik_adet = models.PositiveIntegerField(default = 0, blank=True, null=True)
+    min_siparis_adedi = models.PositiveIntegerField(default = 0, blank=True, null=True)
+    para_birimi = models.CharField(max_length=25, choices=(
+        ('EUR', 'Euro'),
+        ('TL', 'Türk Lirası'),
+        ('USD', 'Dollar')
+    ), default="TL"
+    )
+    parca_fiyati = models.FloatField(default = 0, blank=True, null=True)
+    kalip_fiyati = models.FloatField(default = 0, blank=True, null=True)
+    teslim_turu = models.CharField(max_length=100, blank=True, null=True)
+    kalip_goz_sayisi = models.PositiveIntegerField(default = 0, blank=True, null=True)
+    maca_goz_sayisi = models.PositiveIntegerField(default = 0, blank=True, null=True)
+    kalip_omru_baski_sayisi = models.PositiveIntegerField(default = 0, blank=True, null=True)
+    kum_dokum = models.FloatField(default = 0, blank=True, null=True)
+    kokil_dokum = models.FloatField(default = 0, blank=True, null=True)
+    enjeksiyon_dokum = models.FloatField(default = 0, blank=True, null=True)
+    sicak_maca = models.FloatField(default = 0, blank=True, null=True)
+    soguk_maca = models.FloatField(default = 0, blank=True, null=True)
+    takalama = models.FloatField(default = 0, blank=True, null=True)
+    testere = models.FloatField(default = 0, blank=True, null=True)
+    zimpara = models.FloatField(default = 0, blank=True, null=True)
+    tesviye = models.FloatField(default = 0, blank=True, null=True)    
+    kumlama = models.FloatField(default = 0, blank=True, null=True)
+    test_sizdirmazlik = models.FloatField(default = 0, blank=True, null=True)
+    test_temizleme = models.FloatField(default = 0, blank=True, null=True)
+    isil_islem_kg = models.FloatField(default = 0, blank=True, null=True)    
+    isil_islem_sarj = models.FloatField(default = 0, blank=True, null=True)    
+    vibrasyon = models.FloatField(default = 0, blank=True, null=True)
+    cnc_dik_isleme = models.FloatField(default = 0, blank=True, null=True)
+    cnc_yatay_isleme = models.FloatField(default = 0, blank=True, null=True)
+    torna = models.FloatField(default = 0, blank=True, null=True)
+    heli_coil = models.FloatField(default = 0, blank=True, null=True)
+    montaj_parca = models.FloatField(default = 0, blank=True, null=True)
+    montaj_kaynak = models.FloatField(default = 0, blank=True, null=True)
+    paketleme = models.FloatField(default = 0, blank=True, null=True)
+    emprenye = models.FloatField(default = 0, blank=True, null=True)
+    kaplama = models.FloatField(default = 0, blank=True, null=True)
+    boya = models.FloatField(default = 0, blank=True, null=True)
+    dis_isleme = models.FloatField(default = 0, blank=True, null=True)
+    x_ray_testi = models.FloatField(default = 0, blank=True, null=True)
+    mukavemet_testi = models.FloatField(default = 0, blank=True, null=True)
+    nakliye_maliyeti = models.FloatField(default = 0, blank=True, null=True)
+    
