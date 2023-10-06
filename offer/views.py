@@ -398,6 +398,14 @@ def update_offer_detail_view(request, id):
         form = CreateOfferDetailForm(instance=offer_detail)
     
     
-    context = {'form':form}
+    context = {'form':form, 'offer_detail':offer_detail}
 
     return render(request, 'offer/update-offer-detail.html', context)
+
+
+
+@login_required(login_url='/user/login')
+def delete_offer_detail_view(request, id):
+    offer_detail = get_object_or_404(OfferDetail, id=id)
+    offer_detail.delete()
+    return redirect('user-offer', id = request.user.id)

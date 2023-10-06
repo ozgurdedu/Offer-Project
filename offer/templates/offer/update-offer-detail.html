@@ -6,9 +6,12 @@
     <form action="" method="post" class="form">
         {% csrf_token %}
         {{form.as_p}}    
-        <button type="submit" class="btn btn-outline-primary form-control my-2">
+        <button type="submit" class="btn btn-outline-primary my-2">
             Update Offer Detail
         </button>
+       <a href="{% url 'delete-offer-detail' offer_detail.id %}" class="btn btn-outline-danger my-2">
+            Delete Offer Detail
+       </a>
     </form>
 {% endblock content %}
     
