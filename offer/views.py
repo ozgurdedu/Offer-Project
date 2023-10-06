@@ -382,3 +382,22 @@ def create_offer_detail_view(request, id):
     context = {'form':form}
 
     return render(request, 'offer/create-offer-detail.html', context)
+
+
+@login_required(login_url='/user/login')
+def update_offer_detail_view(request, id):
+    
+    offer = get_object_or_404(Offer, id=id)
+    offer_detail = OfferDetail.objects.get(offer=offer)
+    if request.method == "POST":
+        form = CreateOfferDetailForm(request.POST, instance=offer_detail)
+        if form.is_valid():
+            form.save()
+            return redirect('user-offer', id = request.user.id)
+    else:
+        form = CreateOfferDetailForm(instance=offer_detail)
+    
+    
+    context = {'form':form}
+
+    return render(request, 'offer/update-offer-detail.html', context)

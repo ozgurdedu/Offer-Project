@@ -75,7 +75,7 @@
                         
                        
                                 {% if offer.offerdetail_set.all %}    
-                                <a href="#"> 
+                                <a href="{% url 'update-offer-detail' offer.id %}"> 
                                     <i class="fa-regular fa-pen-to-square"></i>
                                 </a>
                                 {% else %}

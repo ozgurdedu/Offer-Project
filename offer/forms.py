@@ -372,4 +372,3 @@ class CreateOfferDetailForm(forms.ModelForm):
     class Meta:
         model = OfferDetail
         fields = '__all__'
-        
