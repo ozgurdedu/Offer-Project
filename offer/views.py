@@ -22,7 +22,10 @@ def home_view(request):
             Q(rfq__srv_rfq_no__icontains=search_post) | 
             Q(part__part_no__icontains=search_post) |
             Q(part__name__icontains=search_post) | 
-            Q(status__icontains=search_post) 
+            Q(status__icontains=search_post) |
+            Q(related_person__first_name__icontains=search_post) |
+            Q(related_person__last_name__icontains=search_post) | 
+            Q(rfq__customer__name__icontains=search_post)
         )
     else:
         offers = Offer.objects.order_by('-created_date')
