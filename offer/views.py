@@ -117,14 +117,58 @@ def delete_offer_view(request, id):
 @login_required(login_url='/user/login')
 def update_offer_status(request, id):
     offer = Offer.objects.get(id=id)
+  
     if offer.status == "inceleniyor":
         offer.status = "gonderildi"
         offer.save()
     elif offer.status == "gonderildi":
         offer.status = "inceleniyor"
         offer.save()
-    
+  
     return redirect('offer-home')
+# from django.http import JsonResponse
+# @login_required(login_url='/user/login')
+# def update_offer_status(request, id):
+#     offer = Offer.objects.get(id=id)
+    
+#     if request.method == 'POST':
+#         new_status = request.POST.get('new_status')
+        
+#         if new_status == 'inceleniyor':
+#             offer.status = 'inceleniyor'
+#         elif new_status == 'gonderildi':
+#             offer.status = 'gonderildi'
+        
+#         offer.save()
+        
+#         return JsonResponse({'success': True})
+    
+#     return JsonResponse({'success': False})
+
+# from django.http import JsonResponse
+
+# @login_required(login_url='/user/login')
+# def update_offer_status(request, id):
+#     offer = Offer.objects.get(id=id)
+    
+#     if request.method == 'POST':
+#         new_status = request.POST.get('new_status')
+        
+#         if new_status == 'inceleniyor':
+#             offer.status = 'inceleniyor'
+#         elif new_status == 'gonderildi':
+#             offer.status = 'gonderildi'
+        
+#         offer.save()
+        
+#         return JsonResponse({'success': True, 'new_status': offer.status})
+    
+#     return JsonResponse({'success': False})
+
+
+
+
+
 
 
 
@@ -188,7 +232,13 @@ def confirm_rfq_view(request, id):
 # @@@@@@@@@@@@@@@@@ CUSTOMER
 
 def customers_view(request):
-    customers = Customer.objects.order_by('-created_date')
+    search_post = request.GET.get('search')
+    if search_post:
+        customers = Customer.objects.filter(
+            Q(name__icontains=search_post)
+        )
+    else:
+        customers = Customer.objects.order_by('-created_date')
     context = {'customers':customers}
     return render(request, 'offer/customers.html', context)
 
@@ -231,7 +281,14 @@ def delete_customer_view(request, id):
 # @@@@@@@@@@@@@@@@@ PART
 
 def parts_view(request):
-    parts = Part.objects.order_by('-created_date')
+    search_post = request.GET.get('search')
+    if search_post:
+        parts = Part.objects.filter(
+            Q(name__icontains=search_post) | 
+            Q(customer__name__icontains=search_post) 
+        )
+    else:
+        parts = Part.objects.order_by('-created_date')
     context = {'parts':parts}
     return render(request, 'offer/parts.html',context)
 

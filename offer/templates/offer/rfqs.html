@@ -35,14 +35,14 @@
                    
                   
                   
-                  <div class="w-255">
-                    <a href="{% url 'create-offer-rfq' rfq.id %}" class="btn btn-outline-success  my-1 text-left">
+                  <div class="w-255 text-center">
+                    <a href="{% url 'create-offer-rfq' rfq.id %}" class="btn btn-outline-success  my-1">
                         <div class="text-center" style="font-weight: bolder; font-size: larger;">
                             <i class="fa-solid fa-plus"></i>
                         </div>
                     </a> 
                     {% if request.user == rfq.created_by %}
-                    <a href="{% url 'delete-rfq' rfq.id %}" class="btn btn-outline-danger  my-1 text-right">
+                    <a href="{% url 'delete-rfq' rfq.id %}" class="btn btn-outline-danger  my-1">
                         <div class="text-center" style="font-weight: bolder; font-size: larger;">
                             <i class="fa-regular fa-trash-can"></i>
                         </div>

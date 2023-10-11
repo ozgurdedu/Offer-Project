@@ -14,8 +14,8 @@
 <div class="row my-3">
     <div class="col-md-4 h3">
         All Offers
-        <form action="{% url 'offer-home' %}" class="form-inline my-3 my-lg-0 form">
-            <input type="search" class="mr-sm-2 form-control" placeholder="Search" name="search" >
+        <form action="{% url 'offer-home' %}" class="form-inline my-lg-0 form">
+            <input type="search" class="mr-sm-2 my-2 form-control" placeholder="Search" name="search" >
             <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
     </div>
@@ -90,8 +90,7 @@
         <div class="card-footer text-right">
             <div class="row">
                 <div class="col-md-6 text-left"><div class="text-muted">{{offer.related_person.first_name}} {{offer.related_person.last_name}} - {{ offer.date|date:"d/m/Y" }}</div></div>
-               
-               
+            
                {% if request.user == offer.related_person %}
                <div class="col-md-6 text-rigth">
                         {% if offer.status == "gonderildi" %}
@@ -109,7 +108,18 @@
                         {% endif %}
                     </div>
                {% endif %}
-                
+                 
+                 <!-- <div class="col-md-6 text-right">
+                    {% if offer.status == "gonderildi" %}
+                        <a href="#" class="update-status" data-offer-id="{{ offer.id }}" data-new-status="inceleniyor">
+                            <div class="text-success bold-text"> {{ offer.status }}</div>
+                        </a>
+                    {% else %}
+                        <a href="#" class="update-status" data-offer-id="{{ offer.id }}" data-new-status="gonderildi">
+                            <div class="text-danger bold-text"> {{ offer.status }}</div>
+                        </a>
+                    {% endif %}
+                </div> -->
                
                
                
@@ -148,5 +158,30 @@
         {% endif %}
         <h3>----------------------------------------------------------------</h3> -->
 
+        <!-- <script>
+           $(document).ready(function () {
+    $(".update-status").click(function (event) {
+        event.preventDefault();
         
+        var offerId = $(this).data("offer-id");
+        var newStatus = $(this).data("new-status");
+        
+        $.ajax({
+            type: 'POST',
+            url: '/update-offer-status/' + offerId + '/',
+            data: {'new_status': newStatus, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+            dataType: 'json',
+            success: function (data) {
+                // Başarılı olduğunda sayfa yeniden yüklenmeden status'u güncelle
+                if (newStatus === 'gonderildi') {
+                    $(".text-success[data-offer-id=" + offerId + "]").text(data.new_status);
+                } else {
+                    $(".text-danger[data-offer-id=" + offerId + "]").text(data.new_status);
+                }
+            }
+        });
+    });
+});
+
+        </script> -->
 {% endblock content %}

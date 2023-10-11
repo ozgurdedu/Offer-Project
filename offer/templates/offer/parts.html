@@ -4,7 +4,13 @@
 {% block content %} 
            
 <div class="row my-3">
-    <div class="col-md-4 h3">All Parts</div>
+    <div class="col-md-4 h3">
+        All Parts
+        <form action="{% url 'parts' %}" class="form-inline my-3 my-lg-0 form">
+            <input type="search" class="mr-sm-2 my-2 form-control" placeholder="Search" name="search" >
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
     <div class="col-md-8 text-right">
              <a href="{% url 'create-part' %}">
                 <button class="btn btn-success text-white bold-text">
@@ -19,8 +25,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-          <th scope="col">Company</th>
           <th scope="col">Name</th>
+          <th scope="col">Customer</th>
           <th scope="col">Part No</th>
           <th scope="col">Unit Price</th>
           <th scope="col">Mold Price</th>
@@ -35,8 +41,8 @@
       <tbody>
     {% for part in parts %}
         <tr>
-            <th scope="row"> {{part.customer}} </th>
-            <td>{{part.name}}</td>
+            <th scope="row"> {{part.name}} </th>
+            <td>{{part.customer}}</td>
             <td>{{part.part_no}}</td>
             <td>{{part.unit_price}}</td>  
             <td>{{part.mold_price}}</td>  

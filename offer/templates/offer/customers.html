@@ -4,7 +4,13 @@
 {% block content %} 
 
 <div class="row my-3">
-    <div class="col-md-4 h3">All Customers</div>
+    <div class="col-md-4 h3">
+        All Customers
+        <form action="{% url 'customers' %}" class="form-inline my-3 my-lg-0 form">
+            <input type="search" class="mr-sm-2 my-2 form-control" placeholder="Search" name="search" >
+            <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
     <div class="col-md-8 text-right">
              <a href="{% url 'create-customer' %}">
                 <button class="btn btn-success text-white bold-text">
@@ -21,7 +27,6 @@
           <th scope="col">Company</th>
           <th scope="col">Country</th>
           <th scope="col">Industry</th>
-          <th scope="col">Address</th>
           <th scope="col">Related Person</th>
           <th scope="col">Status</th>
           
@@ -37,12 +42,11 @@
             <th scope="row"> {{customer.name}} </th>
             <td>{{customer.country.name}}</td>
             <td>{{customer.industry}}</td>
-            <td>{{customer.address}}</td>  
             <td>{{customer.related_person_mail}}</td>  
             <td> {{customer.status}} </td> 
             
             {% if user.is_authenticated %}
-            <td class="w-255">
+            <td>
                 <a href="{% url 'update-customer' customer.id %}">
                     <i class="fa-regular fa-pen-to-square text-primary"></i>
                 </a>
