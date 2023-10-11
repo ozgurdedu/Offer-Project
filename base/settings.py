@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-tcig0*+phh5b5a50&co#38o2#433ubdc&n-h(y@v47+j^8&900
 DEBUG = True
 
 ALLOWED_HOSTS = [
-#     '192.168.2.213',
+    # '192.168.2.213',
 ]
 
 
@@ -43,7 +43,19 @@ INSTALLED_APPS = [
     'offer',
     'question',
     'fontawesomefree',
+    'rest_framework',
+    'corsheaders',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_RENDERER_CLASSES': [
+#         'rest_framework.renderers.JSONRenderer',
+#         'rest_framework.renderers.BrowsableAPIRenderer',
+#     ],
+#     'DEFAULT_PARSER_CLASSES': [
+#         'rest_framework.parsers.JSONParser',
+#     ],
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,7 +65,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+
+
+# CORS_ALLOWED_ORIGINS = [
+#     "192.168.2.213:3000",
+#     "127.0.0.1:3000",
+# ]
+
 
 ROOT_URLCONF = 'base.urls'
 

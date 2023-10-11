@@ -294,6 +294,12 @@ class Offer(models.Model):
 
 class OfferDetail(models.Model):
     offer = models.ForeignKey(Offer, on_delete=models.CASCADE)
+    para_birimi = models.CharField(max_length=25, choices=(
+        ('EUR', 'Euro'),
+        ('TL', 'Türk Lirası'),
+        ('USD', 'Dollar')
+    ), default="TL"
+    )
     malzeme = models.CharField(max_length=100, blank=True, null=True)
     dokum_tipi = models.CharField(max_length=100, blank=True, null=True)
     maca_tipi = models.CharField(max_length=100, blank=True, null=True)
@@ -301,12 +307,6 @@ class OfferDetail(models.Model):
     maca_agirligi_kg = models.FloatField(default = 0, blank=True, null=True)
     yillik_adet = models.PositiveIntegerField(default = 0, blank=True, null=True)
     min_siparis_adedi = models.PositiveIntegerField(default = 0, blank=True, null=True)
-    para_birimi = models.CharField(max_length=25, choices=(
-        ('EUR', 'Euro'),
-        ('TL', 'Türk Lirası'),
-        ('USD', 'Dollar')
-    ), default="TL"
-    )
     parca_fiyati = models.FloatField(default = 0, blank=True, null=True)
     kalip_fiyati = models.FloatField(default = 0, blank=True, null=True)
     teslim_turu = models.CharField(max_length=100, blank=True, null=True)

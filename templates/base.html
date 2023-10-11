@@ -15,11 +15,11 @@
             {% load static %}
              
            <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                    <img src="{% static 'logo/sirvanli-logo.jpg' %}" alt="" class="img-fluid img-thumbnail my-3">
                    {% include 'navbar.html' %}
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-8">
                     
                     {% block content %}
                     
@@ -27,7 +27,7 @@
                     {% endblock content %}
                         
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     {% include 'right-navbar.html' %}
                 </div>
            </div>

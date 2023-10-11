@@ -8,10 +8,24 @@ import pandas as pd
 import os
 from django.http import HttpResponse
 import tempfile
+from django.db.models import Q 
+
 
 def home_view(request):
 
-    offers = Offer.objects.order_by('-created_date')
+    search_post = request.GET.get('search')
+    if search_post:
+        offers = Offer.objects.filter(
+            Q(offer_no__icontains=search_post)| 
+            Q(date__icontains=search_post) | 
+            Q(rfq__rfq_no__icontains=search_post) | 
+            Q(rfq__srv_rfq_no__icontains=search_post) | 
+            Q(part__part_no__icontains=search_post) |
+            Q(part__name__icontains=search_post) | 
+            Q(status__icontains=search_post) 
+        )
+    else:
+        offers = Offer.objects.order_by('-created_date')
 
     offer_count = offers.count()
     context = {'offers':offers,
